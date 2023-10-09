@@ -47,6 +47,13 @@ export const Content = styled.div`
     > .main-dishes {
         display: flex;
     }
+
+    @media (max-width: 768px) {
+        width: 100%;
+        max-width: 800px;
+
+        padding: 3rem 5rem;
+    }
 `
 
 export const Banner = styled.div`

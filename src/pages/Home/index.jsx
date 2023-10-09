@@ -61,7 +61,22 @@ export function Home() {
   }, [search])
 
   const carousel = Carousel
-  console.log (carousel)
+  const carouselMobile = [
+    {
+      breakpoint: 4000,
+      cols: 3,
+      rows: 1,
+      gap: 0,
+      loop: true,
+    },
+    {
+      breakpoint: 1000,
+      cols: 2,
+      rows: 1,
+      gap: 50,
+      loop: true,
+    },
+  ]  
 
   return (
     <Container>
@@ -82,7 +97,7 @@ export function Home() {
         <h1>Refeições</h1>
 
     <div className="carousel-wrapper">
-        <Carousel cols={3} rows={1} loop={true} gap={0}>
+        <Carousel responsiveLayout={carouselMobile} mobileBreakpoint={1}>
           {
             mainDishes.map(dish => (
               <Carousel.Item key={dish.id}>
@@ -95,7 +110,7 @@ export function Home() {
 
         <h1>Sobremesas</h1>
 
-        <Carousel cols={3} rows={1} loop={true} gap={0}>
+        <Carousel responsiveLayout={carouselMobile} mobileBreakpoint={1}>
           {
             desserts.map(dessert => (
               <Carousel.Item key={dessert.id}>
@@ -107,7 +122,7 @@ export function Home() {
 
         <h1>Bebidas</h1>
 
-        <Carousel cols={3} rows={1} loop={true} gap={0}>
+        <Carousel responsiveLayout={carouselMobile} mobileBreakpoint={1}>
           {
             drinks.map(drink => (
               <Carousel.Item key={drink.id}>
