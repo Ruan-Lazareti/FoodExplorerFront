@@ -12,6 +12,7 @@ export const Container = styled.div`
 
     @media (max-width: 920px) {
         padding: 0 5rem;
+        display: flex;
     }
 `
 
@@ -69,7 +70,7 @@ export const Content = styled.div`
             align-items: center;
             text-align: center;
             justify-content: center;
-            flex-direction: column;
+            gap: 1rem;
 
             >h1 {
                 margin-top: 1rem;

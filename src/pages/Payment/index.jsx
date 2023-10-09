@@ -27,23 +27,19 @@ export function Payment() {
 
     const [orders, setOrder] = useState([])
     const [clientID, setClientID] = useState()
-    const [pixStatus, setPixStatus] = useState('')
-    const [creditStatus, setCreditStatus] = useState('')
-    const [pixBtn, setPixBtn] = useState('')
-    const [creditBtn, setCreditBtn] = useState('')
+    let [pixStatus, setPixStatus] = useState('')
+    let [creditStatus, setCreditStatus] = useState('')
+    let [pixBtn, setPixBtn] = useState('')
+    let [creditBtn, setCreditBtn] = useState('')
 
     function handleClickPix(){
-        setPixStatus = ''
         setCreditStatus = 'hide'
         setPixBtn = 'selected'
-        setCreditBtn = ''
     }
 
     function handleCreditClick(){
-        setCreditStatus = ''
         setPixStatus = 'hide'
 
-        setPixBtn = ''
         setCreditBtn = 'selected'
     }
 

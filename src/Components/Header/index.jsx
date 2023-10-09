@@ -34,9 +34,11 @@ export function Header() {
     }
 
     const buttons = document.querySelector(".button-wrapper")
+    const logotext = document.querySelector(".logo-wrapper")
 
     if(user.isAdm === 0 && buttons) {
         buttons.firstChild.classList.add("hidden")
+        logotext.lastChild.classList.add("hidden")
     } else if (user.isAdm === 1 && buttons) {
         buttons.lastChild.classList.add("hidden")
     }
@@ -46,7 +48,10 @@ export function Header() {
         <Container>
             <div>
                 <img src={logo} alt="logo empresa" />
-                <h1>food explorer</h1>
+                <div className="logo-wrapper">
+                    <h1>food explorer</h1>
+                    <h2>admin</h2>
+                </div>
             </div>
 
             <Input icon={FiSearch} placeholder="Busque por pratos ou ingredientes" type="text" />

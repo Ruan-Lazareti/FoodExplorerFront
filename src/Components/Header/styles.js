@@ -22,10 +22,21 @@ export const Container = styled.div`
         gap: 1rem;
     }
 
-    h1 {
-        white-space: nowrap;
-        font-weight: 700;
-        font-size: 2.4rem;
+    .logo-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: end;
+
+        h1 {
+            white-space: nowrap;
+            font-weight: 700;
+            font-size: 2.4rem;
+        }
+    
+        h2 {
+            font-weight: 400;
+            font-size: 1.2rem;
+        }
     }
 
     .button-wrapper{
