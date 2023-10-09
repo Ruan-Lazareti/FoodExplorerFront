@@ -31,10 +31,14 @@ export const Content = styled.div`
 
     gap: 4rem;
 
+    .hidden {
+        display: none;
+    }
     
     > img {
         width: 54rem;
-        height: 54rem;
+        max-height: 54rem;
+        opacity: .7;
     }
 
     > div  {
@@ -57,16 +61,16 @@ export const Content = styled.div`
         
         h3 {
             font-weight: 400;
-            font-size: 2rem;
-            line-height: 140%;
+            font-size: 2.4rem;
+            line-height: 3.3rem;
             
             filter: brightness(0.8);
             
-            margin-top: .8rem;
+            margin-top: 3rem;
         }
     }
 
-    @media (max-width: 1040px) {
+    @media (max-width: 700px) {
         display: flex;
 
         flex-direction: column;
@@ -81,20 +85,28 @@ export const Content = styled.div`
         > div {
             align-items: center;
             justify-content: center;
+            margin-top: 0;
+            max-width: 50.0rem;
 
             h1 {
             font-weight: 500;
-            font-size: 2rem;
+            font-size: 2.7rem;
         }
         
         h3 {
             font-weight: 400;
-            font-size: 1rem;
+            font-size: 1.6rem;
             line-height: 140%;
+            text-align: justify;
             
             filter: brightness(0.8);
             
-            margin-top: .8rem;
+            margin-top: 2rem;
+        }
+
+        #buttons {
+            justify-content: center;
+            width: 700px;
         }
         }
     }
@@ -102,7 +114,7 @@ export const Content = styled.div`
 
 export const IngredientsWrapper = styled.div`
     display:flex;
-    justify-content: right;
+    justify-content: left;
 
     gap: 0.8rem;
 

@@ -1,6 +1,7 @@
 import { Container, Content, MinusIcon, PlusIcon, IngredientsWrapper, IngredientCard, ButtonWrapper, HeaderButton } from './styles'
 
 import { Button } from '../Button'
+import { Tag } from '../Tag'
 
 import orderIcon from '../../assets/orderIcon.svg'
 import leftArrow from '../../assets/leftarrow.svg'
@@ -19,8 +20,6 @@ export function DetailsBanner({ data, ...rest }) {
     const [controlclick, setControlClick] = useState(0)
     const params = useParams()
     const [ingredients, setIngredients] = useState([])
-    const [ingredientsData, setIngredientsData] = useState([])
-    let controlArray = []
 
     const { user } = useAuth()
 
@@ -66,43 +65,23 @@ export function DetailsBanner({ data, ...rest }) {
             const ingredientsArray = response.data[0].ingredients.split(',')
 
             setIngredients(ingredientsArray)
-            
-            ingredientsArray.forEach(ingredient => {
-                async function fetchIngredientsData() {
-                    const controlArray = []
-
-                    const response = await api.get(`/ingredients/${ingredient}`)
-
-                    const dataIngredients = {
-                        name: response.data.name,
-                        id: response.data.id,
-                        photo: response.data.photo
-                    }
-                    console.log(controlArray)
-                    controlArray.push(dataIngredients)
-
-                    
-                }
-                
-                fetchIngredientsData()
-            },
-            
-            console.log(controlArray),
-
-            setIngredientsData(controlArray),
-
-
-            )
         }
 
         fetchIngredients()
-
-        
-
-
     }, [])
 
-    console.log(ingredientsData)
+    const buttonsClient = document.querySelector(".buttonsClient")
+    const buttonsAdmin = document.querySelector(".buttonsAdmin")
+    const buttons = document.querySelector("#buttons")
+
+
+    if(user.isAdm === 0 && buttons) {
+        buttonsClient.classList.remove("hidden")
+        buttonsAdmin.classList.add("hidden")
+    } else if (user.isAdm === 1 && buttons) {
+        buttonsAdmin.classList.remove("hidden")
+        buttonsClient.classList.add("hidden")
+    }
 
     return (
         <Container>
@@ -125,23 +104,16 @@ export function DetailsBanner({ data, ...rest }) {
                     <IngredientsWrapper>
 
                         {
-                            ingredientsData && ingredientsData.map(ingredient => (
-                                <IngredientCard key={ingredient.id}>
-                                    <img src={`http://localhost:3333/files/${ingredient.photo}`} alt="" />
-                                    <h5>{ingredient.name}</h5>
-                                </IngredientCard>
-
-                                
+                            ingredients && ingredients.map(ingredient => (
+                                <Tag title={ingredient}/>
                             ))
                         }
 
                     </IngredientsWrapper>
 
-                    <ButtonWrapper>
-                        <h2>{data[0].price}</h2>
+                    
 
-                        <button className='ingredients-btn' onClick={handleClick}>Ingredientes</button>
-
+                    <ButtonWrapper className='buttonsClient' id='buttons'>                     
                         <MinusIcon onClick={handleDecrease}>
                             <FiMinus />
                         </MinusIcon>
@@ -153,9 +125,15 @@ export function DetailsBanner({ data, ...rest }) {
                         </PlusIcon>
 
                         <div>
-                            <Button loading={false} title="Incluir" picture={orderIcon} onClick={handleOrder} />
+                            <Button loading={false} title={"incluir - R$ "+data[0].price} onClick={handleOrder} />
                         </div>
 
+                    </ButtonWrapper>
+
+                    <ButtonWrapper className='buttonsAdmin' id='buttons'>
+                        <div>
+                            <Button loading={false} title="Editar Prato" onClick={handleOrder} />
+                        </div>
                     </ButtonWrapper>
                 </div>
 
