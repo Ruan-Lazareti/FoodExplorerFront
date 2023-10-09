@@ -22,7 +22,7 @@ _Instructions for starting the dev environment._
 **Obs.:**
 This project is just the frontend of the project, for the application to work correctly it is necessary to download and run the backend as well, the link is below:
 
-**Backend Link**: COLOCAR MEU LINK AQUI
+**Backend Link**: https://github.com/Ruan-Lazareti/FoodExplorerBack
 
 ## The Website
 
