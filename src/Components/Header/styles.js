@@ -22,6 +22,10 @@ export const Container = styled.div`
         gap: 1rem;
     }
 
+    #mobile {
+        display: none;
+    }
+
     .logo-wrapper {
         display: flex;
         flex-direction: column;
@@ -57,8 +61,24 @@ export const Container = styled.div`
         }
     }
 
-    @media (max-width: 900px) {
-        
+    @media (max-width: 768px) {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        #mobile {
+            display: block;
+
+            >button {
+                background-color: transparent;
+                border-style: none;
+            }
+        }
+
+        #desktop {
+            display: none;
+        }
+
         gap: 4rem;
         
     }

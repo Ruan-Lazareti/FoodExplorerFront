@@ -2,6 +2,7 @@ import { Container, LogOut } from './styles'
 import { useAuth } from '../../hooks/authContext'
 
 import logo from '../../assets/logo.svg'
+import menu from '../../assets/menu.svg'
 import orderIcon from '../../assets/orderIcon.svg'
 import logout from '../../assets/logout.svg'
 import { FiSearch } from 'react-icons/fi'
@@ -34,18 +35,24 @@ export function Header() {
     }
 
     const buttons = document.querySelector(".button-wrapper")
-    const logotext = document.querySelector(".logo-wrapper")
+    const logoText = document.querySelector(".logo-wrapper")
+    const orderButton = document.querySelector(".buttonMobile")
 
     if(user.isAdm === 0 && buttons) {
         buttons.firstChild.classList.add("hidden")
-        logotext.lastChild.classList.add("hidden")
+        logoText.lastChild.classList.add("hidden")
     } else if (user.isAdm === 1 && buttons) {
         buttons.lastChild.classList.add("hidden")
+        orderButton.lastChild.classList.add("hidden")
     }
 
 
     return (
         <Container>
+            <div className="menu" id="mobile">
+                <img src={menu} alt="menu encolhido" />
+            </div>
+
             <div>
                 <img src={logo} alt="logo empresa" />
                 <div className="logo-wrapper">
@@ -54,14 +61,22 @@ export function Header() {
                 </div>
             </div>
 
-            <Input icon={FiSearch} placeholder="Busque por pratos ou ingredientes" type="text" />
-
-            <div className="button-wrapper">
+            <div id="desktop">
+                <Input icon={FiSearch} placeholder="Busque por pratos ou ingredientes" type="text" />
+            </div>
+    
+            <div className="button-wrapper" id="desktop">
                 <Button loading={false} title="Adicionar Prato" picture={plusIcon} onClick={handleAddDish}/>
                 <Button loading={false} title="Pedidos (0)" picture={orderIcon}  onClick={handleOrders}/>
             </div>
 
-            <LogOut onClick={signOut}>
+            <div className="buttonMobile" id="mobile">
+                <button onClick={handleOrders}>
+                    <img src={orderIcon}/>
+                </button>
+            </div>
+
+            <LogOut onClick={signOut} id="desktop">
                 <img src={logout} alt=""/>
             </LogOut>
         </Container>
