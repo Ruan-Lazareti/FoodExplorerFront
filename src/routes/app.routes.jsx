@@ -5,6 +5,7 @@ import { Details } from '../pages/Details'
 import { OrderList } from '../pages/OrderList'
 import { Payment } from '../pages/Payment'
 import { AddDish } from '../pages/AddDish'
+import { EditDish } from '../pages/EditDish'
 import { OrderAdm } from '../pages/OrderAdm'
 
 export function AppRoutes() {
@@ -15,6 +16,7 @@ export function AppRoutes() {
             <Route path='/orders' element={<OrderList/>}/>
             <Route path='/payment' element={<Payment/>}/>
             <Route path='/add' element={<AddDish/>}/>
+            <Route path='/edit/:id' element={<EditDish/>}/>
             <Route path='/orderadm' element={<OrderAdm/>}/>
         </Routes>
     )
