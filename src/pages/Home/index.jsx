@@ -19,46 +19,57 @@ import { useState, useEffect } from 'react'
 import { api } from '../../services/api'
 
 export function Home() {
-  const [search, setSearch] = useState('')
-  const [searchedDishes, setSearchedDishes] = useState([])
+  const [searchTerm, setSearchTerm] = useState('')
   const [mainDishes, setMainDishes] = useState([])
   const [drinks, setDrinks] = useState([])
   const [desserts, setDesserts] = useState([])
+  const [loading, setLoading] = useState(true);
 
-  const [searchResults, setSearchResults] = useState([])
-
+  const [searchResultsDish, setSearchResultsDish] = useState([])
+  const [searchResultsDrink, setSearchResultsDrink] = useState([])
+  const [searchResultsDessert, setSearchResultsDessert] = useState([])
   
   useEffect(() => {
-    async function fetchMainDishes() {
-      const response = await api.get(`/getters/main`)
-      setMainDishes(response.data)
-    }
-    async function fetchDrinks() {
-      const response = await api.get(`/getters/drink`)
-      setDrinks(response.data)
-    }
-    async function fetchDesserts() {
-      const response = await api.get(`/getters/dessert`)
-      setDesserts(response.data)
+    async function fetchData() {
+      try {
+        const mainResponse = await api.get(`/getters/main`);
+        const drinkResponse = await api.get(`/getters/drink`);
+        const dessertResponse = await api.get(`/getters/dessert`);
+        
+        setMainDishes(mainResponse.data);
+        setDrinks(drinkResponse.data);
+        setDesserts(dessertResponse.data);
+
+        setSearchResultsDish(mainResponse.data)
+        setSearchResultsDrink(drinkResponse.data)
+        setSearchResultsDessert(dessertResponse.data)
+        
+        setLoading(false);
+      } catch (error) {
+        console.error('Error ao buscar dados:', error);
+        setLoading(false); 
+      }
     }
 
-    fetchMainDishes()
-    fetchDesserts()
-    fetchDrinks()
-
+    fetchData()
   }, [])
 
   useEffect(() => {
     
-    let resultsMainDishes = mainDishes.filter(dish => dish.name.toLowerCase().includes(search.toLowerCase()))
-    let resultsDrinks = drinks.filter(drink => drink.name.toLowerCase().includes(search.toLowerCase()))
-    let resultsDesserts = desserts.filter(dessert => dessert.name.toLowerCase().includes(search.toLowerCase()))
+    if(!loading) {
+    console.log(mainDishes)
+    let resultsMainDishes = mainDishes.filter(dish => dish.name.toLowerCase().includes(searchTerm.toLowerCase()))
+    let resultsDrinks = drinks.filter(drink => drink.name.toLowerCase().includes(searchTerm.toLowerCase()))
+    let resultsDesserts = desserts.filter(dessert => dessert.name.toLowerCase().includes(searchTerm.toLowerCase()))
     
-    const result = [].concat(resultsMainDishes, resultsDrinks, resultsDesserts)
     
-    setSearchResults(result)
     
-  }, [search])
+    setSearchResultsDish(resultsMainDishes)
+    setSearchResultsDrink(resultsDrinks)
+    setSearchResultsDessert(resultsDesserts)
+    }
+    
+  }, [searchTerm], mainDishes, drinks, desserts, loading)
 
   const carousel = Carousel
   const carouselMobile = [
@@ -80,7 +91,7 @@ export function Home() {
 
   return (
     <Container>
-      <Header />
+      <Header searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 
       <Content>
         <Banner>
@@ -99,7 +110,7 @@ export function Home() {
     <div className="carousel-wrapper">
         <Carousel responsiveLayout={carouselMobile} mobileBreakpoint={1}>
           {
-            mainDishes.map(dish => (
+            searchResultsDish.map(dish => (
               <Carousel.Item key={dish.id}>
                 <Card data={dish}/>
               </Carousel.Item>
@@ -112,7 +123,7 @@ export function Home() {
 
         <Carousel responsiveLayout={carouselMobile} mobileBreakpoint={1}>
           {
-            desserts.map(dessert => (
+            searchResultsDessert.map(dessert => (
               <Carousel.Item key={dessert.id}>
                 <Card data={dessert}/>
               </Carousel.Item>
@@ -124,7 +135,7 @@ export function Home() {
 
         <Carousel responsiveLayout={carouselMobile} mobileBreakpoint={1}>
           {
-            drinks.map(drink => (
+            searchResultsDrink.map(drink => (
               <Carousel.Item key={drink.id}>
                 <Card data={drink}/>
               </Carousel.Item>

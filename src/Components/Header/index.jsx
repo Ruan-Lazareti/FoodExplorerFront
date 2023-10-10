@@ -1,6 +1,8 @@
 import { Container, LogOut } from './styles'
 import { useAuth } from '../../hooks/authContext'
 
+import { api } from '../../services/api'
+
 import logo from '../../assets/logo.svg'
 import menu from '../../assets/menu.svg'
 import orderIcon from '../../assets/orderIcon.svg'
@@ -13,10 +15,30 @@ import { Input } from '../../Components/Input'
 import plusIcon from '../../assets/plus.svg'
 
 import { useNavigate } from 'react-router-dom'
+import { useState } from 'react'
+import { useEffect } from 'react'
 
-export function Header() {
+export function Header({ searchTerm, setSearchTerm }) {
     const { user, signOut } = useAuth()
     const navigate = useNavigate()
+    const [searchResults, setSearchResults] = useState('');
+
+    useEffect(() => {
+        async function fetchSearchResults() {
+            try {
+                const response = await api.get(`/search?query=${searchTerm}`)
+                setSearchResults(response.data)
+            } catch {
+                alert('Erro ao buscar resultados')
+            }
+        }
+
+        if(searchTerm) {
+            fetchSearchResults()
+        } else {
+            setSearchResults([])
+        }
+    }, [searchTerm])
 
     function handleAddDish() {
         if (user.isAdm === 1) {
@@ -62,7 +84,13 @@ export function Header() {
             </div>
 
             <div id="desktop">
-                <Input icon={FiSearch} placeholder="Busque por pratos ou ingredientes" type="text" />
+                <Input 
+                    icon={FiSearch} 
+                    placeholder="Busque por pratos ou ingredientes" 
+                    type="text" 
+                    value={searchTerm}
+                    onChange={(event) => setSearchTerm(event.target.value)}
+                />
             </div>
     
             <div className="button-wrapper" id="desktop">
