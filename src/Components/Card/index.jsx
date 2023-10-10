@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 
 import { Button } from '../../Components/Button'
+import pencil from '../../assets/pencil.svg'
 
 import { api } from '../../services/api'
 
@@ -56,7 +57,7 @@ export function Card({ data, ...rest }) {
             <img src={`http://localhost:3333/files/${data.photo}`} alt="" onClick={handleDetails} />
 
             <FavIcon>
-                <FiHeart />
+                {user.isAdm === 0 ? <FiHeart/> : <img src={pencil}/> }
             </FavIcon>
 
             <h1>{data.name}</h1>

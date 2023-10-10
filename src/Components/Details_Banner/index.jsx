@@ -20,6 +20,7 @@ export function DetailsBanner({ data, ...rest }) {
     const [controlclick, setControlClick] = useState(0)
     const params = useParams()
     const [ingredients, setIngredients] = useState([])
+    const [ingredientsData, setIngredientsData] = useState([])
 
     const { user } = useAuth()
 
@@ -30,11 +31,16 @@ export function DetailsBanner({ data, ...rest }) {
     function handleIncrease() {
         setCounter(counter + 1)
     }
+
     function handleDecrease() {
         if (counter <= 1) {
             return
         }
         setCounter(counter - 1)
+    }
+
+    function handleEdit() {
+        navigate(`/edit/${params.id}`)
     }
 
     async function handleOrder() {
@@ -63,7 +69,6 @@ export function DetailsBanner({ data, ...rest }) {
         async function fetchIngredients() {
             const response = await api.get(`/dishes/${params.id}`)
             const ingredientsArray = response.data[0].ingredients.split(',')
-
             setIngredients(ingredientsArray)
         }
 
@@ -132,7 +137,7 @@ export function DetailsBanner({ data, ...rest }) {
 
                     <ButtonWrapper className='buttonsAdmin' id='buttons'>
                         <div>
-                            <Button loading={false} title="Editar Prato" onClick={handleOrder} />
+                            <Button loading={false} title="Editar Prato" onClick={handleEdit} />
                         </div>
                     </ButtonWrapper>
                 </div>

@@ -70,6 +70,8 @@ export function AddDish() {
             await api.patch(`/dishes/photo/${newDishId.id}`, fileUploadForm)
 
             alert('prato adicionado com sucesso')
+
+            handleBack()
         } catch (error) {
             alert('Erro ao adicionar prato. Entre em contato com o administrador do sistema.')
         }

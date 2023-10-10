@@ -30,7 +30,7 @@ export function EditDish({ dishId }) {
     useEffect(() => {
       async function fetchData() {
         const response = await api.get(`/dishes/${params.id}`)
-        const { name, type, price, description, ingredients, photo } = response.data;
+        const { name, type, price, description, ingredients, photo } = response.data[0];
         const ingredientsArray = ingredients.split(',')
         
         setName(name);
@@ -39,12 +39,14 @@ export function EditDish({ dishId }) {
         setDescription(description);
         setIngredients(ingredientsArray);
         setPhoto(photo);
+
+        console.log(response)
       }
 
       fetchData()
     }, [])
 
-     function handleAddIngredient() {
+    function handleAddIngredient() {
         setIngredients(prevState => [...prevState, newIngredient])
         setNewIngredient('')
     }
@@ -88,6 +90,8 @@ export function EditDish({ dishId }) {
           })
 
           alert('Prato alterado com sucesso!')
+
+          handleBack()
       } catch (error) {
           alert('Erro ao alterar prato. Entre em contato com o administrador do sistema.')
       }
