@@ -14,7 +14,7 @@ export const Container = styled.div`
 
     height: 100vh;
 
-    @media (max-width: 1040px) {
+    @media (max-width: 700px) {
         height: 100vh
     }
 `
@@ -22,7 +22,7 @@ export const Content = styled.div`
 
     padding: 2.5rem 12rem 12.5rem;
 
-    @media (max-width: 1040px) {
+    @media (max-width: 700px) {
         padding: 2.5rem 5rem 4rem;
 
         width: 100vh
@@ -37,10 +37,10 @@ export const Form = styled.form`
         font-size: 3.2rem;
         line-height: 140%;
 
-        margin-bottom:3.2rem;
+        margin:3.2rem 0;
     }
 
-    @media (max-width: 1040px) {
+    @media (max-width: 700px) {
         padding: 2.5rem 5rem 4rem;
     }
 `
@@ -100,17 +100,13 @@ export const Textarea = styled.div`
         padding: 1.9rem 2.4rem;
 
         resize: none; 
+        background-color: ${({ theme }) => theme.COLORS.BACKGROUND_GREEN_900};
 
-        background-color: ${({ theme }) => theme.COLORS.BACKGROUND_DARKBLUE_800};
-
-        outline: 1px solid ${({ theme }) => theme.COLORS.WHITE};
+        
         border-radius: 10px;
 
         color: ${({ theme }) => theme.COLORS.WHITE};
 
-        &::placeholder{
-            color: ${({ theme }) => theme.COLORS.GREY_TEXT}
-        }
     }
 `
 export const Section = styled.div`
@@ -120,18 +116,31 @@ export const Section = styled.div`
         gap: 3rem;
 
         width: 100%;
+
+        @media (max-width: 700px) {
+            flex-direction: column;
+            width: 100%;
+            justify-content: center;
+            gap: 0;
+        }
 `
 export const InputFile = styled.div`
         display:flex;
         align-items: center;
         justify-content: center;
         gap: 2rem;
-        padding: 1rem;
+        padding: 1.6rem;
 
-        border: 1px solid ${({ theme }) => theme.COLORS.WHITE};
+        background-color: ${({ theme }) => theme.COLORS.BACKGROUND_GREEN_900};
+        color: ${({ theme }) => theme.COLORS.WHITE};
+
         border-radius: 10px;
 
         width: 100%;
+
+        input:focus{
+            outline: 1px solid ${({ theme }) => theme.COLORS.GREY_TEXT};
+        }
 
        > #label-picture {
             cursor: pointer;
@@ -153,7 +162,7 @@ export const ShorterInput = styled.div`
     flex-direction: column;
     align-items: left;
 
-    color: ${({ theme }) => theme.COLORS.WHITE}; 
+    color: ${({ theme }) => theme.COLORS.WHITE};
     font-family: 'Roboto';
     font-style: normal;
     font-weight: 400;
@@ -166,6 +175,25 @@ export const ShorterInput = styled.div`
         opacity: 0.65;
 
         margin-bottom: 1.5rem;
+    }
+
+    > select {
+        background-color: ${({ theme }) => theme.COLORS.BACKGROUND_GREEN_900};
+        color: ${({ theme }) => theme.COLORS.GRAY_300};
+        padding: 1.6rem;
+
+        border-radius: 10px;
+        border: none;
+
+        width: 100%;
+
+        input:focus{
+            outline: 1px solid ${({ theme }) => theme.COLORS.GREY_TEXT};
+        } 
+    }
+
+    @media (max-width: 700px) {
+        width: 100%;
     }
 `
 export const BiggerInput = styled.div`
@@ -190,7 +218,6 @@ export const BiggerInput = styled.div`
         align-items: center;
         gap: 1.6rem;
 
-        border: 1px solid ${({ theme }) => theme.COLORS.WHITE};
         border-radius: 10px;
     }
 
@@ -204,11 +231,17 @@ export const BiggerInput = styled.div`
         flex-direction: column;
 
         width: 100%;
+        
     }
 
     #ingredients-section{
         padding: 1rem;
         justify-content: start;
+        background-color: ${({ theme }) => theme.COLORS.BACKGROUND_GREEN_900};
+    }
+
+    @media (max-width: 700px) {
+        width: 100%;
     }
 `
 
@@ -235,5 +268,9 @@ export const FormButton = styled.button`
 
     button:hover {
         filter: brightness(1.1)
+    }
+
+    @media (max-width: 700px) {
+        width: 100%;
     }
 `

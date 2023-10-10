@@ -10,12 +10,14 @@ export const Container = styled.div`
     
     border-radius: 10px;
 
-    border: 1px solid ${({ theme }) => theme.COLORS.WHITE};
+    input:focus{
+            outline: 1px solid ${({ theme }) => theme.COLORS.GREY_TEXT};
+        }
     
     >input {
         width: 100%;
         height: 5.6rem;
-        background-color: ${({ theme }) => theme.COLORS.BACKGROUND_DARKBLUE_800};
+        background-color: ${({ theme }) => theme.COLORS.BACKGROUND_GREEN_900};
         color: ${({ theme }) => theme.COLORS.WHITE};
         font-size: 1.4rem;
         font-weight: 400;

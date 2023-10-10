@@ -25,7 +25,7 @@ export function AddDish() {
     const [price, setPrice] = useState('')
     const [description, setDescription] = useState('')
     const [photo, setPhoto] = useState('')
-    const type = 'main'
+    const [type, setType] = useState('')
 
     function handleAddIngredient() {
         setIngredients(prevState => [...prevState, newIngredient])
@@ -42,7 +42,6 @@ export function AddDish() {
 
     function handleDishPhoto(event) {
         const file = event.target.files[0]
-
         setPhoto(file)
     }
 
@@ -54,22 +53,27 @@ export function AddDish() {
             return alert('Por favor preencha todos os campos para adicionar um prato')
         }
 
-        await api.post('/dishes', {
-            name,
-            description,
-            price,
-            type,
-            ingredients
-        })
+        try {
+            const response = await api.post('/dishes', {
+                name,
+                description,
+                price,
+                type,
+                ingredients
+            })
 
-        const fileUploadForm = new FormData()
-        fileUploadForm.append('photo', photo)
+            const newDishId = response.data.id
+
+            const fileUploadForm = new FormData()
+            fileUploadForm.append('photo', photo)
+
+            await api.patch(`/dishes/photo/${newDishId.id}`, fileUploadForm)
+
+            alert('prato adicionado com sucesso')
+        } catch (error) {
+            alert('Erro ao adicionar prato. Entre em contato com o administrador do sistema.')
+        }
         
-        await api.patch(`/dishes/photo/${id}`, fileUploadForm)
-
-        id++
-
-        alert('prato adicionado com sucesso')
     }
 
     return (
@@ -92,22 +96,37 @@ export function AddDish() {
                                 Imagem do Prato
                             </label>
 
-                            <InputFile>
+                            <InputFile htmlFor='dish-picture'>
                                 <img src={UploadIcon} alt="" />
                                 <label htmlFor='dish-picture' id='label-picture'>
-                                    Selecione a foto do prato
-                                    <input type='file' id='dish-picture' onChange={handleDishPhoto} />
+                                    Selecione a imagem
+                                    <input type='file' id='dish-picture' name='dish-picture' onChange={handleDishPhoto} />
                                 </label>
                             </InputFile>
                         </ShorterInput>
+
                         <BiggerInput>
                             <label htmlFor='name'>
-                                Nome do Prato
+                                Nome
                             </label>
 
                             <InputAddDish placeholder="Ex.: Salada Ceasar" type="text" id='name' name='name' onChange={event => setName(event.target.value)} />
                         </BiggerInput>
+
+                        <ShorterInput>
+                            <label htmlFor='category'>
+                                Categoria
+                            </label>
+
+                            <select name="category" id="category" onChange={event => setType(event.target.value)}>
+                                <option value="main">Refeição</option>
+                                <option value="dessert">Sobremesa</option>
+                                <option value="drink">Bebida</option>
+                            </select>
+                        </ShorterInput>
+
                     </Section>
+
                     <Section>
                         <BiggerInput>
                             <span>Ingredientes</span>
@@ -123,33 +142,35 @@ export function AddDish() {
 
                                 <IngredientItem
                                     isNew
-                                    placeholder='Nome do ingrediente'
+                                    placeholder='Adicionar'
                                     value={newIngredient}
                                     onChange={event => setNewIngredient(event.target.value)}
                                     onClick={handleAddIngredient}
                                 />
-
                             </Section>
+
                         </BiggerInput>
                         <ShorterInput>
                             <label htmlFor='price'>
                                 Preço
                             </label>
 
-                            <InputAddDish placeholder="Ex.: Salada Ceasar" type="text" id='price' name='price' onChange={event => setPrice(event.target.value)} />
+                            <InputAddDish placeholder="R$ 00,00" type="number" id='price' name='price' onChange={event => setPrice(event.target.value)} />
                         </ShorterInput>
                     </Section>
 
-                    <Textarea>
-                        <label htmlFor='description'>
-                            Descrição
-                        </label>
+                    <Section>
+                        <Textarea>
+                            <label htmlFor='description'>
+                                Descrição
+                            </label>
 
-                        <textarea name="description" id="description" placeholder="Descrição do prato" onChange={event => setDescription(event.target.value)}></textarea>
-                    </Textarea>
+                            <textarea name="description" id="description" placeholder="Fale brevemente sobre o prato, seus ingredientes e composição" onChange={event => setDescription(event.target.value)}></textarea>
+                        </Textarea>
+                    </Section>  
 
                     <Section>
-                        <FormButton onClick={handleNewDish}>Adicionar Prato</FormButton>
+                        <FormButton onClick={handleNewDish}>Salvar Alterações</FormButton>
                     </Section>
                 </Form>
             </Content>
